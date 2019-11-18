@@ -2,13 +2,11 @@
 
 if ($request['method'] === 'GET') {
   $link = get_db_link();
-  $message = check_connection($link);
-  $response['body'] = [
-    'message' => $message
-  ];
+  $products = get_all_products($link);
+  $response['body'] = $products;
   send($response);
 }
-function check_connection($link)
+function get_all_products($link)
 {
   $sql = "SELECT productId,name,price,image,shortDescription FROM products";
   $res = mysqli_query($link,$sql);
@@ -16,7 +14,6 @@ function check_connection($link)
   while ($row = mysqli_fetch_assoc($res)) {
     array_push($output, $row);
   }
-  // $link->query($sql);
   return $output;
 }
 send($response);
