@@ -1,6 +1,6 @@
 <?php
 
-if ($request['method'] === 'GET') {
+if ($request['method'] === 'GET' || $request['method'] === 'get') {
   $link = get_db_link();
   $products = get_all_products($link);
   $response['body'] = $products;
