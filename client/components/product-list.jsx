@@ -12,7 +12,7 @@ class ProductList extends React.Component {
     const prodList = this.state.products.map((product, index) => {
       return (
         <div key={index} className="col-lg-4  col-md-6 col-sm-6">
-          <ProductListItem product={product} />
+          <ProductListItem product={product} setView={this.props.setView}/>
         </div>
       );
     });
@@ -21,7 +21,6 @@ class ProductList extends React.Component {
         <div className="row">
           {prodList}
         </div>
-
       </div>
     );
   }
@@ -31,7 +30,7 @@ class ProductList extends React.Component {
   }
 
   getProducts() {
-    fetch('../../api/products')
+    fetch('/api/products')
       .then(res => res.json())
       .then(res => {
         this.setState({
