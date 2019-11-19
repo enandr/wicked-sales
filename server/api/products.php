@@ -14,7 +14,7 @@ function get_all_products($link,$id)
     $res = mysqli_query($link, $sql);
     $output = mysqli_fetch_assoc($res);
   }
-  else if ($_GET['productId'] <= 0){
+  else if ($_GET['productId'] <= 0 && !empty($id)){
     throw new ApiError("ID '$id' is not valid.", 400);
   }
   else{
