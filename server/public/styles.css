@@ -1,0 +1,15 @@
+.products{
+  height: 500px;
+  margin-top: 20px;
+}
+.products img{
+  object-fit: contain;
+  height: 300px;
+}
+.short-description{
+  height: 20px;
+}
+header{
+  height:40px;
+  font-size:1.5rem;
+}
