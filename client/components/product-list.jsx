@@ -11,7 +11,7 @@ class ProductList extends React.Component {
   render() {
     const prodList = this.state.products.map((product, index) => {
       return (
-        <div key={index} className="col-4">
+        <div key={index} className="col-lg-4  col-md-6 col-sm-6">
           <ProductListItem product={product} />
         </div>
       );
