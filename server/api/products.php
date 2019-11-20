@@ -1,6 +1,6 @@
 <?php
 
-if ($request['method'] === 'GET' || $request['method'] === 'get') {
+if ($request['method'] === 'GET') {
   $id = $_GET['productId'];
   $link = get_db_link();
   if(!empty($id)){
