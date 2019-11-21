@@ -11,7 +11,7 @@ class ProductListItem extends React.Component {
       <div className="card products clickable" onClick={this.clickHandle}>
         <img src={this.props.product.image} className=""></img>
         <div className="card-body">
-          <h1 className="card-title">{this.props.product.name}</h1>
+          <h3 className="card-title">{this.props.product.name}</h3>
           <p className="card-text">${newPrice}</p>
           <p className="card-text short-description">{this.props.product.shortDescription}</p>
         </div>
