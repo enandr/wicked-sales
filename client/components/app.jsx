@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductList from './product-list.jsx';
 import ProductDetails from './product-details.jsx';
+import CartSummary from './cartsummary.jsx';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +13,7 @@ export default class App extends React.Component {
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.deleteFromCart = this.deleteFromCart.bind(this);
   }
 
   render() {
@@ -19,7 +21,7 @@ export default class App extends React.Component {
       <div>
         <header className="bg-dark text-white">
           <div className="container">$ Wicked Sales
-            <i className="fa fa-shopping-cart clickable">    {this.state.cartItemCount}</i>
+            <i className="fa fa-shopping-cart clickable" onClick={() => { this.setView('summary'); }}>    {this.state.cartItemCount}</i>
           </div>
         </header>
         <div className="container">
@@ -37,6 +39,8 @@ export default class App extends React.Component {
     switch (this.state.view) {
       case 'details':
         return <ProductDetails productId={this.state.params.productId} setView={this.setView} addToCart={this.addToCart}/>;
+      case 'summary':
+        return <CartSummary deleteItem={this.deleteFromCart} cartItems={this.state.cart} setView={this.setView}/>;
       case 'catalog':
       default:
         return <ProductList setView={this.setView}/>;
@@ -65,6 +69,21 @@ export default class App extends React.Component {
   addToCart(product) {
     const init = {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    };
+    fetch('/api/cart', init)
+      .then(res => res.json())
+      .then(res => {
+        this.getCartItems();
+      });
+  }
+
+  deleteFromCart(product) {
+    const init = {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       },

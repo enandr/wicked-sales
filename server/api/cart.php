@@ -15,6 +15,13 @@ $link = get_db_link();
     $response['body'] = $addedItem;
     send($response);
   }
+
+  if ($request['method'] === 'DELETE'){
+    $product = $request['body']['productId'];
+    deleteFromCart($link, $product);
+    $response['body'] = "Item Deleted";
+    send($response);
+  }
   // !---------------------------
   function getPrice($link, $product){
     if (!isset($product)) {
@@ -59,11 +66,16 @@ $link = get_db_link();
   }
 
   function getCartItems($link,$cartId){
-    $cartGetSql = "SELECT * FROM `cartItems` WHERE `cartId` = $cartId";
+    $cartGetSql = "SELECT cartItems.cartItemId, products.productId,products.name,products.price,products.image,products.shortDescription FROM cartItems INNER JOIN products ON cartItems.productId=products.productId WHERE `cartId` = $cartId";
     $cartGetRes = mysqli_query($link, $cartGetSql);
     $output = [];
     while ($row = mysqli_fetch_assoc($cartGetRes)) {
       array_push($output, $row);
     }
     return $output;
+  }
+
+  function deleteFromCart($link, $product){
+    $itemDeleteSql = "DELETE FROM cartItems WHERE cartItemId = $product";
+    mysqli_query($link, $itemDeleteSql);
   }
