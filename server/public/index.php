@@ -9,6 +9,7 @@ switch ($request['path']) {
   case '/api/health-check':
   case '/api/test':
   case '/api/cart':
+  case '/api/orders':
   case '/api/products':
     require_once "..${request['path']}.php";
 

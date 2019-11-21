@@ -20,7 +20,7 @@ export default class App extends React.Component {
     return (
       <div>
         <header className="bg-dark text-white">
-          <div className="container">$ Wicked Sales
+          <div className="container"><img className="clickable" src="/images/logo.png"></img>
             <i className="fa fa-shopping-cart clickable" onClick={() => { this.setView('summary'); }}>    {this.state.cartItemCount}</i>
           </div>
         </header>
