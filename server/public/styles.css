@@ -46,3 +46,22 @@ aside{
 .buy{
   font-weight: bold;
 }
+.miniImage{
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  object-fit: contain;
+}
+.total{
+  text-align: center;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  width:200px;
+  height:100px;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.372);
+  padding:5px;
+}
+.checkout-button{
+  width:100%;
+}
