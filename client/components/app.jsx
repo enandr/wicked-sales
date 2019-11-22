@@ -2,6 +2,8 @@ import React from 'react';
 import ProductList from './product-list.jsx';
 import ProductDetails from './product-details.jsx';
 import CartSummary from './cartsummary.jsx';
+import TotalModal from './totalmodal.jsx';
+import PlaceOrder from './placeorder.jsx';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,13 +16,14 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
+    this.getCartItems = this.getCartItems.bind(this);
   }
 
   render() {
     return (
       <div>
         <header className="bg-dark text-white">
-          <div className="container"><img className="clickable" src="/images/logo.png"></img>
+          <div className="container"><img onClick={() => { this.setView('catalog'); }} className="clickable" src="/images/logo.png"></img>
             <i className="fa fa-shopping-cart clickable" onClick={() => { this.setView('summary'); }}>    {this.state.cartItemCount}</i>
           </div>
         </header>
@@ -38,16 +41,36 @@ export default class App extends React.Component {
   renderWhich() {
     switch (this.state.view) {
       case 'details':
-        return <ProductDetails productId={this.state.params.productId} setView={this.setView} addToCart={this.addToCart}/>;
+        return (
+          <div>
+            <ProductDetails productId={this.state.params.productId} setView={this.setView} addToCart={this.addToCart}/>
+            <TotalModal setView={this.setView} cart={this.state.cart} text='View Cart' />
+          </div>
+        );
       case 'summary':
-        return <CartSummary deleteItem={this.deleteFromCart} cartItems={this.state.cart} setView={this.setView}/>;
+        return (
+          <div>
+            <CartSummary deleteItem={this.deleteFromCart} cartItems={this.state.cart} setView={this.setView}/>
+            <TotalModal setView={this.setView} cart={this.state.cart} text='Checkout' />
+          </div>
+        );
+      case 'order':
+        return (
+          <PlaceOrder setView={this.setView} cart={this.state.cart} newCart={this.getCartItems}/>
+        );
       case 'catalog':
       default:
-        return <ProductList setView={this.setView}/>;
+        return (
+          <div>
+            <ProductList setView={this.setView}/>
+            <TotalModal setView={this.setView} cart={this.state.cart} text='View Cart'/>
+          </div>
+
+        );
     }
   }
 
-  setView(name, params) {
+  setView(name, params = {}) {
     this.setState({
       view: name,
       params: params
