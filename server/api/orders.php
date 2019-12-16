@@ -39,6 +39,9 @@ function sendOrder($link, $cartId,$orderInfo){
   $insertId = $link->insert_id;
   unset($_SESSION['cart_id']);
   return [
-    "orderId"=> $insertId
+    "orderId"=> $insertId,
+    "name"=> $orderInfo['name'],
+    "creditCard"=> $orderInfo['creditCard'],
+    "shippingAddress"=> $orderInfo['address']
   ];
 }
