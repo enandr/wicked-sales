@@ -1,25 +1,27 @@
-# wicked-sales
+# Wicked Sales
+Wicked Sales is a demo sales site offering different as seen on tv products.
+## Technologies Used
+* HTML5
+* JavaScript
+* CSS3
+* Bootstrap 4
+* React
+* PHP 
+* MySql
+* AWS EC2
 
-> - Maintained by: `thebearingedge`
+## Live Demo
+https://wickedsales.rogerenand.com
 
-A full stack LAMP & React shopping cart app.
+## Features
+* User can see all products
+* User can see their cart
+* User can add items to their cart
+* User can see product information
+* User can remove items from their cart
+* User can place an order
+* User can always see their total
 
-## Introduction
-
-For this project, you will be building a single-page React application and a dynamic PHP API.
-
-## Getting Started
-
-1. Fork this repository to your GitHub account and clone the fork to your local `lfz` directory.
-2. Check out a `dev` branch and push it to `origin`.
-    ```
-    git push origin dev
-    ```
-3. Install all dependencies in `package.json` with NPM.
-    ```
-    npm install
-    ```
-
-## Instructions
-
-There are instructions and Issue Template snippets located in the `features` directory of [the instructions for this project](https://github.com/Learning-Fuze/wicked-sales-instructions).
+## Images
+![Main Sales Page](https://github.com/enandr/open-ticket/blob/dev/Screen%20Shot%202019-12-16%20at%206.02.40%20PM.png "Main Sales Page")
+![Product Details Page](https://github.com/enandr/open-ticket/blob/dev/Screen%20Shot%202019-12-16%20at%206.02.50%20PM.png "Product Details Page")
