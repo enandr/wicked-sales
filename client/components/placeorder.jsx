@@ -7,7 +7,10 @@ class PlaceOrder extends React.Component {
     this.state = {
       name: '',
       cc: '',
-      address: ''
+      address: '',
+      nameClass: 'form-control',
+      ccClass: 'form-control',
+      addressClass: 'form-control'
     };
   }
 
@@ -26,15 +29,15 @@ class PlaceOrder extends React.Component {
           <label>Name</label>
           <input onChange={() => {
             this.handleChange(event);
-          }} type='text' className="form-control" value={this.state.name} name='name'></input>
+          }} type='text' className={this.state.nameClass} value={this.state.name} name='name'></input>
           <label>Credit Card</label>
           <input onChange={() => {
             this.handleChange(event);
-          }} type='number' className="form-control" value={this.state.cc} name='cc'></input>
+          }} type='number' className={this.state.ccClass} value={this.state.cc} name='cc'></input>
           <label>Shipping Address</label>
           <textarea onChange={() => {
             this.handleChange(event);
-          }} type='text' className="form-control" value={this.state.address} name='address'></textarea>
+          }} type='text' className={this.state.addressClass} value={this.state.address} name='address'></textarea>
         </form>
         <div className="d-flex justify-content-between mt-3">
           <h3 onClick={() => {
@@ -49,9 +52,31 @@ class PlaceOrder extends React.Component {
   }
 
   handleChange(event) {
-    const name = event.target.getAttribute('name');
+    const name = event.target.name;
+    const length = event.target.value.length;
     const newState = [];
-    newState[name] = event.target.value;
+    switch (name) {
+      case 'address':
+      case 'name':
+        if (length >= 4) {
+          newState[name + 'Class'] = 'form-control is-valid';
+        } else {
+          newState[name + 'Class'] = 'form-control is-invalid';
+        }
+        newState[name] = event.target.value;
+        break;
+      case 'cc':
+        if (length > 16) {
+          newState[name + 'Class'] = 'form-control is-valid';
+        } else {
+          newState[name + 'Class'] = 'form-control is-invalid';
+          newState[name] = event.target.value;
+        }
+        break;
+    }
+    if (length === 0) {
+      newState[name + 'Class'] = 'form-control';
+    }
     this.setState(newState);
   }
 
@@ -78,19 +103,16 @@ class PlaceOrder extends React.Component {
         shippingAddress: address
       })
     };
-    if (name.length > 2 && cc.length >= 16 && address.length > 5) {
+    if (name.length > 3 && cc.length === 16 && address.length > 3) {
       fetch('/api/orders', init)
         .then(res => res.json())
         .then(res => {
-          alert('Your Order Id Is: ' + res.orderId);
           this.props.newCart();
           this.props.setView('catalog');
         })
         .catch(err => {
           console.error(err.message);
         });
-    } else {
-      alert('bad entry');
     }
   }
 }

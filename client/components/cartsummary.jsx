@@ -1,19 +1,34 @@
 import React from 'react';
 import CartSummaryItem from './cartsummaryitem.jsx';
 class CartSummary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   render() {
     const backButtonText = '< Back To Catalog';
     let products = null;
+    let total = 0;
+    let disabled = false;
     if (this.props.cartItems.length === 0) {
       products = (<div>There Are No Items In Your Cart.</div>);
     } else {
       products = this.props.cartItems.map((item, index) => {
+        total += item.price;
         return (
           <div key={index}>
             <CartSummaryItem deleteItem={this.props.deleteItem} product={item} />
           </div>
         );
       });
+      total = (total / 100).toFixed(2);
+    }
+    if (total === 0) {
+      disabled = true;
     }
     return (
       <div>
@@ -22,9 +37,14 @@ class CartSummary extends React.Component {
             {backButtonText}
           </h5>
           {products}
+          <button className="btn btn-success checkoutBtn" onClick={this.handleClick} disabled={disabled}>Checkout ${total}</button>
         </div>
       </div>
     );
+  }
+
+  handleClick() {
+    this.props.setView('order');
   }
 }
 export default CartSummary;
