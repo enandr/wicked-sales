@@ -73,8 +73,20 @@ aside{
 .buyNow{
   z-index: 2;
 }
+
+.checkoutBtn{
+  margin-top: 20px;
+}
 @media (max-width: 600px) {
   .total{
     visibility: hidden;
+  }
+  .detail-page img{
+  object-fit: contain;
+  height: 300px;
+  width: 300px;
+  }
+  .buy{
+  margin-bottom: 20px;
   }
 }

@@ -21,7 +21,7 @@ class ProductDetails extends React.Component {
           </h5>
         </div>
         <div>
-          <img className="col-lg-7 mb-5" src={this.state.product.image}></img>
+          <img className="col-lg-7 col-sm-6 mb-5" src={this.state.product.image}></img>
           <aside className="col-lg-4">
             <h1 className="details details-name">{this.state.product.name}</h1>
             <p className="">${(this.state.product.price / 100).toFixed(2)}</p>
