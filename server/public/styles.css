@@ -1,5 +1,5 @@
 .products{
-  height: 500px;
+  height: 400px;
   margin-top: 20px;
   transition: transform .2s;
 }
@@ -9,7 +9,7 @@
 }
 .products img{
   object-fit: contain;
-  height: 300px;
+  height: 150px;
 }
 .short-description{
   height: 20px;
@@ -53,6 +53,7 @@ aside{
   object-fit: contain;
 }
 .total{
+  z-index: 2;
   text-align: center;
   position: fixed;
   right: 50px;
@@ -61,7 +62,19 @@ aside{
   height:100px;
   box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.372);
   padding:5px;
+  transition: transform .2s;
+}
+.total:hover{
+  transform: scale(1.05,1.05);
 }
 .checkout-button{
   width:100%;
+}
+.buyNow{
+  z-index: 2;
+}
+@media (max-width: 600px) {
+  .total{
+    visibility: hidden;
+  }
 }
