@@ -5,9 +5,9 @@ class PlaceOrder extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      name: 'Test Test',
-      cc: '1234567890123456',
-      address: '123 Test Place'
+      name: '',
+      cc: '',
+      address: ''
     };
   }
 

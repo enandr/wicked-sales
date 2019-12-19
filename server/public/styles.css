@@ -1,5 +1,5 @@
 .products{
-  height: 500px;
+  height: 400px;
   margin-top: 20px;
   transition: transform .2s;
 }
@@ -9,7 +9,7 @@
 }
 .products img{
   object-fit: contain;
-  height: 300px;
+  height: 150px;
 }
 .short-description{
   height: 20px;
@@ -69,4 +69,12 @@ aside{
 }
 .checkout-button{
   width:100%;
+}
+.buyNow{
+  z-index: 2;
+}
+@media (max-width: 600px) {
+  .total{
+    visibility: hidden;
+  }
 }

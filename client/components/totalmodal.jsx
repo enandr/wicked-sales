@@ -8,14 +8,18 @@ class TotalModal extends React.Component {
 
   render() {
     let total = 0;
+    let disabled = false;
     this.props.cart.map(item => {
       total += item.price;
     });
+    if (total === 0 && this.props.text === 'Checkout') {
+      disabled = true;
+    }
     return (
       <div className="card total">
         <h4>{this.props.text}</h4>
         <h2>
-          <a onClick={this.handleClick} className="badge badge-success mt-2 clickable text-white checkout-button">${(total / 100).toFixed(2)}</a>
+          <button onClick={this.handleClick} className="badge badge-success mt-2 clickable text-white checkout-button" disabled={disabled}>${(total / 100).toFixed(2)}</button>
         </h2>
       </div>
     );
