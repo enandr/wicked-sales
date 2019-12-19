@@ -53,6 +53,7 @@ aside{
   object-fit: contain;
 }
 .total{
+  z-index: 2;
   text-align: center;
   position: fixed;
   right: 50px;
@@ -61,6 +62,10 @@ aside{
   height:100px;
   box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.372);
   padding:5px;
+  transition: transform .2s;
+}
+.total:hover{
+  transform: scale(1.05,1.05);
 }
 .checkout-button{
   width:100%;
