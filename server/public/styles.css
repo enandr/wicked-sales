@@ -82,11 +82,12 @@ aside{
     visibility: hidden;
   }
   .detail-page img{
-  object-fit: contain;
-  height: 300px;
-  width: 300px;
+    object-fit: contain;
+    height: 300px;
+    width: 300px;
   }
   .buy{
-  margin-bottom: 20px;
+    margin-bottom: 20px;
+    margin-top: 0;
   }
 }
