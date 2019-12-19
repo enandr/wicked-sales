@@ -72,20 +72,6 @@ set_exception_handler(function ($error) {
   send($response);
 });
 
-register_shutdown_function(function () {
-  $error = error_get_last();
-  if (headers_sent() || $error === null) return;
-  $response = [
-    'status' => 500,
-    'headers' => [
-      'Content-Type' => 'application/json; charset=utf-8'
-    ],
-    'body' => [
-      'error' => 'An unexpected error occurred.'
-    ]
-  ];
-  send($response);
-});
 function terminal_log($value)
 {
   error_log(print_r($value, true));
