@@ -23,7 +23,7 @@ export default class App extends React.Component {
     return (
       <div>
         <header className="bg-dark text-white">
-          <div className="container"><img onClick={() => { this.setView('catalog'); }} className="clickable" src="/images/logo.png"></img>
+          <div className="container"><p onClick={() => { this.setView('catalog'); }} className="clickable"><i className="fas fa-bolt text-warning"></i> Lightning Sales <i className="fas fa-bolt text-warning"></i></p>
             <i className="fa fa-shopping-cart clickable" onClick={() => { this.setView('summary'); }}>    {this.state.cartItemCount}</i>
           </div>
         </header>
@@ -62,7 +62,7 @@ export default class App extends React.Component {
       default:
         return (
           <div>
-            <ProductList setView={this.setView}/>
+            <ProductList setView={this.setView} addToCart={this.addToCart}/>
             <TotalModal setView={this.setView} cart={this.state.cart} text='View Cart'/>
           </div>
 
@@ -89,7 +89,8 @@ export default class App extends React.Component {
       });
   }
 
-  addToCart(product) {
+  addToCart(product, price = null) {
+    product.discount = price;
     const init = {
       method: 'POST',
       headers: {

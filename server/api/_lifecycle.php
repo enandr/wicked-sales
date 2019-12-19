@@ -86,3 +86,7 @@ register_shutdown_function(function () {
   ];
   send($response);
 });
+function terminal_log($value)
+{
+  error_log(print_r($value, true));
+}

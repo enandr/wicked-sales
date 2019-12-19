@@ -10,8 +10,14 @@ $link = get_db_link();
 
   if ($request['method'] === 'POST') {
     $product = $request['body']['productId'];
+    if(!empty($request['body']['discount'])){
+      $discount = $request['body']['discount'];
+    }
+    else{
+      $discount = null;
+    }
     $cartId = getCartId($link);
-    $addedItem = addToCart($link, $cartId, $product);
+    $addedItem = addToCart($link, $cartId, $product,$discount);
     $response['body'] = $addedItem;
     send($response);
   }
@@ -44,9 +50,16 @@ $link = get_db_link();
     return $cartId;
   }
 
-  function addToCart($link, $cartId, $product){
+  function addToCart($link, $cartId, $product,$discount){
+    terminal_log($discount);
+    if ($discount === null){
     $price = getPrice($link, $product);
     $price = $price['price'];
+    }
+    else{
+      $price = $discount;
+    }
+    // $price = $price['price'];
     $sqlCartInsert = "INSERT INTO `cartItems` (`cartId`, `productId`, `price`) VALUES ($cartId, $product, $price)";
     mysqli_query($link, $sqlCartInsert);
     $insertId = $link -> insert_id;
@@ -66,7 +79,7 @@ $link = get_db_link();
   }
 
   function getCartItems($link,$cartId){
-    $cartGetSql = "SELECT cartItems.cartItemId, products.productId,products.name,products.price,products.image,products.shortDescription FROM cartItems INNER JOIN products ON cartItems.productId=products.productId WHERE `cartId` = $cartId";
+    $cartGetSql = "SELECT cartItems.cartItemId, products.productId,products.name,cartItems.price,products.image,products.shortDescription FROM cartItems INNER JOIN products ON cartItems.productId=products.productId WHERE `cartId` = $cartId";
     $cartGetRes = mysqli_query($link, $cartGetSql);
     $output = [];
     while ($row = mysqli_fetch_assoc($cartGetRes)) {
