@@ -77,7 +77,11 @@ aside{
 .checkoutBtn{
   margin-top: 20px;
 }
-
+@media (max-width: 1000px) {
+  .total{
+    visibility: hidden;
+  }
+}
 @media (max-width: 600px) {
   .total{
     visibility: hidden;
@@ -90,5 +94,10 @@ aside{
   .buy{
     margin-bottom: 20px;
     margin-top: 0;
+  }
+}
+@media screen and (max-width: 1400px) and  (orientation:landscape){
+  .total{
+    visibility: hidden;
   }
 }
