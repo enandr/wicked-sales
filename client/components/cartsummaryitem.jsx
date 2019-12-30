@@ -7,12 +7,25 @@ class CartSummaryItem extends React.Component {
   }
 
   render() {
+    if (this.props.product.hasDiscount === '1') {
+      return (
+        <div className="card flex-row mt-3">
+          <img className="miniImage" src={this.props.product.image}></img>
+          <aside className="d-flex flex-column justify-content-center">
+            <div>{this.props.product.name}</div>
+            {<div>${(this.props.product.price / 100).toFixed(2)} <span className="text-primary">50% OFF</span></div>}
+            <div>{this.props.product.shortDescription}</div>
+            <a className="text-danger clickable" onClick={this.handleClick}>Remove From Cart</a>
+          </aside>
+        </div>
+      );
+    }
     return (
       <div className="card flex-row mt-3">
         <img className="miniImage" src={this.props.product.image}></img>
         <aside className="d-flex flex-column justify-content-center">
           <div>{this.props.product.name}</div>
-          <div>${(this.props.product.price / 100).toFixed(2)}</div>
+          {<div>${(this.props.product.price / 100).toFixed(2)}</div>}
           <div>{this.props.product.shortDescription}</div>
           <a className="text-danger clickable" onClick={this.handleClick}>Remove From Cart</a>
         </aside>
