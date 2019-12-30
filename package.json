@@ -7,7 +7,9 @@
     "build": "webpack --mode=production",
     "dev": "npm-run-all --silent --parallel dev:*",
     "dev:client": "webpack-dev-server",
-    "dev:server": "php -S '0.0.0.0:9000' -t server/public -c php.ini"
+    "dev:server": "php -S '0.0.0.0:9000' -t server/public -c php.ini",
+    "db:export": "php database/export.php",
+    "db:import": "php database/import.php"
   },
   "husky": {
     "hooks": {
