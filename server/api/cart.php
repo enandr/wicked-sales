@@ -16,8 +16,14 @@ $link = get_db_link();
     else{
       $discount = null;
     }
+    if (!empty($request['body']['hasDiscount'])) {
+      $hasDiscount = $request['body']['hasDiscount'];
+      terminal_log($hasDiscount);
+    } else {
+      $hasDiscount = false;
+    }
     $cartId = getCartId($link);
-    $addedItem = addToCart($link, $cartId, $product,$discount);
+    $addedItem = addToCart($link, $cartId, $product,$discount,$hasDiscount);
     $response['body'] = $addedItem;
     send($response);
   }
@@ -50,7 +56,7 @@ $link = get_db_link();
     return $cartId;
   }
 
-  function addToCart($link, $cartId, $product,$discount){
+  function addToCart($link, $cartId, $product,$discount,$hasDiscount){
     terminal_log($discount);
     if ($discount === null){
     $price = getPrice($link, $product);
@@ -60,7 +66,7 @@ $link = get_db_link();
       $price = $discount;
     }
     // $price = $price['price'];
-    $sqlCartInsert = "INSERT INTO `cartItems` (`cartId`, `productId`, `price`) VALUES ($cartId, $product, $price)";
+    $sqlCartInsert = "INSERT INTO `cartItems` (`cartId`, `productId`, `price`,`hasDiscount`) VALUES ($cartId, $product, $price,$hasDiscount)";
     mysqli_query($link, $sqlCartInsert);
     $insertId = $link -> insert_id;
     $resCartJoinSql = "SELECT cartItems.cartItemId, products.productId,products.name,products.price,products.image,products.shortDescription FROM cartItems INNER JOIN products ON cartItems.productId=products.productId WHERE `cartItemId` = $insertId";
@@ -79,7 +85,7 @@ $link = get_db_link();
   }
 
   function getCartItems($link,$cartId){
-    $cartGetSql = "SELECT cartItems.cartItemId, products.productId,products.name,cartItems.price,products.image,products.shortDescription FROM cartItems INNER JOIN products ON cartItems.productId=products.productId WHERE `cartId` = $cartId";
+    $cartGetSql = "SELECT cartItems.cartItemId, products.productId,products.name,cartItems.price,products.image,products.shortDescription,cartItems.hasDiscount FROM cartItems INNER JOIN products ON cartItems.productId=products.productId WHERE `cartId` = $cartId";
     $cartGetRes = mysqli_query($link, $cartGetSql);
     $output = [];
     while ($row = mysqli_fetch_assoc($cartGetRes)) {

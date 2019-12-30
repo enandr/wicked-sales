@@ -28,7 +28,8 @@ class ProductDetails extends React.Component {
             <p className="">{this.state.product.shortDescription}</p>
             <button type="button" name="cart" className="btn btn-success clickable buy" onClick={() => {
               const product = {
-                productId: this.state.product.productId
+                productId: this.state.product.productId,
+                hasDiscount: 'false'
               };
               this.props.addToCart(product);
             }}>Add To Cart</button>

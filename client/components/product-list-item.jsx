@@ -34,7 +34,8 @@ class ProductListItem extends React.Component {
   buyNowClick() {
     this.setState({ disabled: true });
     const product = {
-      productId: this.props.product.productId
+      productId: this.props.product.productId,
+      hasDiscount: 'true'
     };
     const newPrice = (this.props.product.price / 2).toFixed(0);
     this.props.addToCart(product, newPrice);
