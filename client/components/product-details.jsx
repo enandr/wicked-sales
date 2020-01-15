@@ -3,9 +3,25 @@ class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: null
+      product: null,
+      disabled: false,
+      timeToAdd: 10
     };
+    this.timer = null;
+    this.countDown();
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  countDown() {
+    this.timer = setInterval(() => {
+      let currTime = this.state.timeToAdd;
+      currTime -= 1;
+      this.setState({ timeToAdd: currTime });
+      if (this.state.timeToAdd < 0) {
+        clearInterval(this.timer);
+        this.setState({ timeToAdd: 0, disabled: true });
+      }
+    }, 1000);
   }
 
   render() {
@@ -25,9 +41,9 @@ class ProductDetails extends React.Component {
           <img className="col-lg-7 col-sm-6 mb-5" src={this.state.product.image}></img>
           <aside className="col-lg-4">
             <h1 className="details details-name">{this.state.product.name}</h1>
-            <p className=""><span className="text-danger">${newPrice}</span><span className="text-info"> -50%</span> <strong className="text-success">${(newPrice / 2).toFixed(2)}</strong> | Seconds Left: <strong className="text-danger">{this.props.time}</strong></p>
+            <p className=""><span className="text-danger">${newPrice}</span><span className="text-info"> -50%</span> <strong className="text-success">${(newPrice / 2).toFixed(2)}</strong> | Seconds Left: <strong className="text-danger">{this.state.timeToAdd}</strong></p>
             <p className="">{this.state.product.shortDescription}</p>
-            <button type="button" name="cart" className="btn btn-success clickable buy" onClick={() => {
+            <button type="button" name="cart" className="btn btn-success clickable buy" disabled={this.state.disabled} onClick={() => {
               const product = {
                 productId: this.state.product.productId,
                 hasDiscount: 'true'

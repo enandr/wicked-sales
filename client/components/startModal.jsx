@@ -8,7 +8,7 @@ export default class ModalExample extends React.Component {
       modal: false,
       setModal: false
     };
-    if (this.props.default === 'true') {
+    if (this.props.default === true) {
       this.state.modal = true;
     }
   }

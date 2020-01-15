@@ -13,7 +13,7 @@ export default class App extends React.Component {
       params: {},
       cart: [],
       cartItemCount: 0,
-      modalOpen: true
+      modalOpen: false
     };
     // document.querySelector('#startModal').modal('show');
     // $('#startModal').modal('show');
@@ -33,7 +33,7 @@ export default class App extends React.Component {
         </header>
         <div className="container">
           {this.renderWhich()}
-          <ModalExample default="true"/>
+          <ModalExample default={this.state.modalOpen}/>
         </div>
       </div>
     );
