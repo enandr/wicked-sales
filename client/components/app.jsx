@@ -13,14 +13,35 @@ export default class App extends React.Component {
       params: {},
       cart: [],
       cartItemCount: 0,
-      modalOpen: false
+      modalOpen: false,
+      masterTimer: { min: 4, sec: 59 }
     };
-    // document.querySelector('#startModal').modal('show');
-    // $('#startModal').modal('show');
+    this.timer = null;
+    this.masterTimer();
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
+  }
+
+  masterTimer() {
+    this.timer = setInterval(() => {
+      const currTime = this.state.masterTimer;
+      currTime.sec -= 1;
+      if (currTime.sec < 10 && currTime.sec >= 0) {
+        currTime.sec = '0' + currTime.sec;
+      }
+      if (currTime.sec < 0) {
+        if (currTime.min > 0) {
+          currTime.min -= 1;
+        }
+        currTime.sec = 59;
+      }
+      if (currTime.min === 0 && currTime.sec === '00') {
+        clearInterval(this.timer);
+      }
+      this.setState({ masterTimer: currTime });
+    }, 1000);
   }
 
   render() {
@@ -55,8 +76,8 @@ export default class App extends React.Component {
       case 'summary':
         return (
           <div>
-            <CartSummary deleteItem={this.deleteFromCart} cartItems={this.state.cart} setView={this.setView}/>
-            <TotalModal setView={this.setView} cart={this.state.cart} text='Checkout' />
+            <CartSummary timer={this.state.masterTimer} deleteItem={this.deleteFromCart} cartItems={this.state.cart} setView={this.setView}/>
+            <TotalModal timer={this.state.masterTimer} setView={this.setView} cart={this.state.cart} text='Checkout' />
           </div>
         );
       case 'order':
@@ -107,6 +128,7 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(res => {
         this.getCartItems();
+        this.setState({ masterTimer: { min: 4, sec: 59 } });
       });
   }
 
