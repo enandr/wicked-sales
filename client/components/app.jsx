@@ -4,6 +4,7 @@ import ProductDetails from './product-details.jsx';
 import CartSummary from './cartsummary.jsx';
 import TotalModal from './totalmodal.jsx';
 import PlaceOrder from './placeorder.jsx';
+import ModalExample from './startModal.jsx';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -11,8 +12,11 @@ export default class App extends React.Component {
       view: 'catalog',
       params: {},
       cart: [],
-      cartItemCount: 0
+      cartItemCount: 0,
+      modalOpen: true
     };
+    // document.querySelector('#startModal').modal('show');
+    // $('#startModal').modal('show');
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
@@ -29,6 +33,7 @@ export default class App extends React.Component {
         </header>
         <div className="container">
           {this.renderWhich()}
+          <ModalExample default="true"/>
         </div>
       </div>
     );

@@ -77,6 +77,9 @@ aside{
 .checkoutBtn{
   margin-top: 20px;
 }
+.nextLine{
+  display: inline-block;
+}
 @media (max-width: 1000px) {
   .total{
     visibility: hidden;

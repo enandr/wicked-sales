@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PurchaseModal from './purchaseModal.jsx';
 class PlaceOrder extends React.Component {
   constructor(props) {
     super(props);
@@ -10,11 +10,20 @@ class PlaceOrder extends React.Component {
       address: '',
       nameClass: 'form-control',
       ccClass: 'form-control',
-      addressClass: 'form-control'
+      addressClass: 'form-control',
+      modal: false
     };
+    this.handleConfirm = this.handleConfirm.bind(this);
   }
 
   render() {
+    if (this.state.modal === true) {
+      var showModal = (
+        <PurchaseModal open={this.state.modal} header="CONFIRM" body="Are You Sure You Want To Remove This Item?" confirm={this.handleConfirm} toggle={this.toggle}/>
+      );
+    } else {
+      showModal = null;
+    }
     const backButtonText = '< Back To Catalog';
     let total = 0;
     this.props.cart.map(item => {
@@ -47,6 +56,7 @@ class PlaceOrder extends React.Component {
             this.handleClick(event);
           }} name="placeOrder" className='btn btn-danger clickable'>Place Order</button>
         </div>
+        {showModal}
       </div>
     );
   }
@@ -81,6 +91,10 @@ class PlaceOrder extends React.Component {
   }
 
   handleClick(event) {
+    this.setState({ modal: true });
+  }
+
+  handleConfirm() {
     if (event.target.getAttribute('name') === 'back') {
       this.props.setView('catalog');
     } else {
