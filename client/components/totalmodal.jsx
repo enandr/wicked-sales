@@ -12,7 +12,7 @@ class TotalModal extends React.Component {
     this.props.cart.map(item => {
       total += item.price;
     });
-    if (total === 0 && this.props.text === 'Checkout') {
+    if ((total === 0 && this.props.text === 'Checkout') || (this.props.text === 'Checkout' && this.props.timer.min === 0 && this.props.timer.sec === '00')) {
       disabled = true;
     }
     return (

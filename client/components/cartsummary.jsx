@@ -27,14 +27,14 @@ class CartSummary extends React.Component {
       });
       total = (total / 100).toFixed(2);
     }
-    if (total === 0) {
+    if (total === 0 || (this.props.timer.min === 0 && this.props.timer.sec === '00')) {
       disabled = true;
     }
     return (
       <div>
         <div className="mt-3">
           <h5 className="mt-2 clickable" onClick={() => { this.props.setView('catalog'); }}>
-            {backButtonText}
+            {backButtonText} | Time Remaining To Buy: {this.props.timer.min}:{this.props.timer.sec}
           </h5>
           {products}
           <button className="btn btn-success checkoutBtn" onClick={this.handleClick} disabled={disabled}>Checkout ${total}</button>
