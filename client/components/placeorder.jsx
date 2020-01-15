@@ -11,7 +11,8 @@ class PlaceOrder extends React.Component {
       nameClass: 'form-control',
       ccClass: 'form-control',
       addressClass: 'form-control',
-      modal: false
+      modal: false,
+      canOrder: 'btn btn-danger clickable'
     };
     this.handleConfirm = this.handleConfirm.bind(this);
   }
@@ -47,6 +48,7 @@ class PlaceOrder extends React.Component {
           <textarea onChange={() => {
             this.handleChange(event);
           }} type='text' className={this.state.addressClass} value={this.state.address} name='address'></textarea>
+          <small className="form-text text-muted">Do not enter in real information! This app is only a demo!</small>
         </form>
         <div className="d-flex justify-content-between mt-3">
           <h3 onClick={() => {
@@ -54,7 +56,7 @@ class PlaceOrder extends React.Component {
           }} name="back" className="clickable">{backButtonText}</h3>
           <button onClick={() => {
             this.handleClick(event);
-          }} name="placeOrder" className='btn btn-danger clickable'>Place Order</button>
+          }} name="placeOrder" className={this.state.canOrder}>Place Order</button>
         </div>
         {showModal}
       </div>
@@ -64,7 +66,7 @@ class PlaceOrder extends React.Component {
   handleChange(event) {
     const name = event.target.name;
     const length = event.target.value.length;
-    const newState = [];
+    const newState = {};
     switch (name) {
       case 'address':
       case 'name':
@@ -87,19 +89,26 @@ class PlaceOrder extends React.Component {
     if (length === 0) {
       newState[name + 'Class'] = 'form-control';
     }
+    if (this.state.name.length > 3 && this.state.address.length > 3 && this.state.cc.length > 15) {
+      newState.canOrder = 'btn btn-success clickable';
+    } else {
+      newState.canOrder = 'btn btn-danger clickable';
+    }
     this.setState(newState);
   }
 
   handleClick(event) {
-    this.setState({ modal: true });
-  }
-
-  handleConfirm() {
     if (event.target.getAttribute('name') === 'back') {
       this.props.setView('catalog');
     } else {
-      this.placeOrder();
+      if (this.state.name.length > 3 && this.state.address.length > 3 && this.state.cc.length > 15) {
+        this.setState({ modal: true });
+      }
     }
+  }
+
+  handleConfirm() {
+    this.placeOrder();
   }
 
   placeOrder() {
