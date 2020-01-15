@@ -46,7 +46,7 @@ class CartSummaryItem extends React.Component {
             <a className="text-danger clickable" onClick={this.handleClick}>Remove From Cart</a>
           </aside>
         </div>
-
+        {showModal}
       </div>
     );
   }

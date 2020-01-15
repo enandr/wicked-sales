@@ -34,7 +34,7 @@ class CartSummary extends React.Component {
       <div>
         <div className="mt-3">
           <h5 className="mt-2 clickable" onClick={() => { this.props.setView('catalog'); }}>
-            {backButtonText} | Time Remaining To Buy: {this.props.timer.min}:{this.props.timer.sec}
+            {backButtonText} | <span className="nextLine">Time Remaining To Buy: {this.props.timer.min}:{this.props.timer.sec}</span>
           </h5>
           {products}
           <button className="btn btn-success checkoutBtn" onClick={this.handleClick} disabled={disabled}>Checkout ${total}</button>

@@ -19,7 +19,7 @@ class ProductDetails extends React.Component {
       this.setState({ timeToAdd: currTime });
       if (this.state.timeToAdd < 0) {
         clearInterval(this.timer);
-        this.setState({ timeToAdd: 0, disabled: true });
+        this.setState({ timeToAdd: 0 });
       }
     }, 1000);
   }
@@ -29,7 +29,16 @@ class ProductDetails extends React.Component {
     if (this.state.product === null) {
       return null;
     }
-    const newPrice = (this.state.product.price / 100).toFixed(2);
+    var newPrice = (this.state.product.price / 100).toFixed(2);
+    if (this.state.timeToAdd > 0) {
+      var priceLine = (
+        <p className=""><span className="text-danger">${newPrice}</span><span className="text-info"> -50%</span> <strong className="text-success">${(newPrice / 2).toFixed(2)}</strong> | Seconds Left: <strong className="text-danger">{this.state.timeToAdd}</strong></p>
+      );
+    } else {
+      priceLine = (
+        <p className=""><span className="text-danger">${newPrice}</span> | <strong className="text-danger">Full Price</strong></p>
+      );
+    }
     return (
       <div className="container card detail-page mt-3">
         <div>
@@ -41,14 +50,22 @@ class ProductDetails extends React.Component {
           <img className="col-lg-7 col-sm-6 mb-5" src={this.state.product.image}></img>
           <aside className="col-lg-4">
             <h1 className="details details-name">{this.state.product.name}</h1>
-            <p className=""><span className="text-danger">${newPrice}</span><span className="text-info"> -50%</span> <strong className="text-success">${(newPrice / 2).toFixed(2)}</strong> | Seconds Left: <strong className="text-danger">{this.state.timeToAdd}</strong></p>
+            {priceLine}
             <p className="">{this.state.product.shortDescription}</p>
-            <button type="button" name="cart" className="btn btn-success clickable buy" disabled={this.state.disabled} onClick={() => {
-              const product = {
-                productId: this.state.product.productId,
-                hasDiscount: 'true'
-              };
-              const newPrice = (this.state.product.price / 2).toFixed(0);
+            <button type="button" name="cart" className="btn btn-success clickable buy" onClick={() => {
+              if (this.state.timeToAdd > 0) {
+                var product = {
+                  productId: this.state.product.productId,
+                  hasDiscount: 'true'
+                };
+                newPrice = (this.state.product.price / 2).toFixed(0);
+              } else {
+                product = {
+                  productId: this.state.product.productId,
+                  hasDiscount: 'false'
+                };
+                newPrice = (this.state.product.price);
+              }
               this.props.addToCart(product, newPrice);
             }}>Add To Cart</button>
           </aside>
