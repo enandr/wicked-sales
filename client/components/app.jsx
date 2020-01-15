@@ -13,7 +13,7 @@ export default class App extends React.Component {
       params: {},
       cart: [],
       cartItemCount: 0,
-      modalOpen: false,
+      modalOpen: true,
       masterTimer: { min: 4, sec: 59 }
     };
     this.timer = null;
