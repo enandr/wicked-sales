@@ -1,11 +1,13 @@
 import React from 'react';
+import AfterAddModal from './afterAddModal.jsx';
 class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       product: null,
       disabled: false,
-      timeToAdd: 10
+      timeToAdd: 10,
+      modal: false
     };
     this.timer = null;
     this.countDown();
@@ -25,6 +27,13 @@ class ProductDetails extends React.Component {
   }
 
   render() {
+    if (this.state.modal === true) {
+      var showModal = (
+        <AfterAddModal open={this.state.modal} setView={this.props.setView} />
+      );
+    } else {
+      showModal = null;
+    }
     const backButtonText = '< Back To Catalog';
     if (this.state.product === null) {
       return null;
@@ -52,25 +61,11 @@ class ProductDetails extends React.Component {
             <h1 className="details details-name">{this.state.product.name}</h1>
             {priceLine}
             <p className="">{this.state.product.shortDescription}</p>
-            <button type="button" name="cart" className="btn btn-success clickable buy" onClick={() => {
-              if (this.state.timeToAdd > 0) {
-                var product = {
-                  productId: this.state.product.productId,
-                  hasDiscount: 'true'
-                };
-                newPrice = (this.state.product.price / 2).toFixed(0);
-              } else {
-                product = {
-                  productId: this.state.product.productId,
-                  hasDiscount: 'false'
-                };
-                newPrice = (this.state.product.price);
-              }
-              this.props.addToCart(product, newPrice);
-            }}>Add To Cart</button>
+            <button type="button" name="cart" className="btn btn-success clickable buy" onClick={this.handleClick}>Add To Cart</button>
           </aside>
         </div>
         <div className="mb-5">{this.state.product.longDescription}</div>
+        {showModal}
       </div>
     );
   }
@@ -84,8 +79,27 @@ class ProductDetails extends React.Component {
       });
   }
 
-  handleClick() {
-    this.props.setView('catalog');
+  handleClick(event) {
+    if (event.target.getAttribute('name') === 'cart') {
+      var newPrice = (this.state.product.price / 100).toFixed(2);
+      this.setState({ modal: true });
+      if (this.state.timeToAdd > 0) {
+        var product = {
+          productId: this.state.product.productId,
+          hasDiscount: 'true'
+        };
+        newPrice = (this.state.product.price / 2).toFixed(0);
+      } else {
+        product = {
+          productId: this.state.product.productId,
+          hasDiscount: 'false'
+        };
+        newPrice = (this.state.product.price);
+      }
+      this.props.addToCart(product, newPrice);
+    } else {
+      this.props.setView('catalog');
+    }
   }
 }
 export default ProductDetails;
