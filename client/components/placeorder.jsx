@@ -43,7 +43,7 @@ class PlaceOrder extends React.Component {
           <label>Credit Card</label>
           <input onChange={() => {
             this.handleChange(event);
-          }} type='number' className={this.state.ccClass} value={this.state.cc} name='cc'></input>
+          }} type='text' className={this.state.ccClass} value={this.state.cc} name='cc'></input>
           <label>Shipping Address</label>
           <textarea onChange={() => {
             this.handleChange(event);
@@ -81,8 +81,10 @@ class PlaceOrder extends React.Component {
         if (length > 16) {
           newState[name + 'Class'] = 'form-control is-valid';
         } else {
-          newState[name + 'Class'] = 'form-control is-invalid';
-          newState[name] = event.target.value;
+          if (!isNaN(event.target.value)) {
+            newState[name + 'Class'] = 'form-control is-invalid';
+            newState[name] = event.target.value;
+          }
         }
         break;
     }
