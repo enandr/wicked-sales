@@ -6,17 +6,17 @@ class ProductDetails extends React.Component {
     this.state = {
       product: null,
       disabled: false,
-      timeToAdd: 10,
       modal: false
     };
     this.timer = null;
     this.countDown();
     this.handleClick = this.handleClick.bind(this);
+    this.state.timeToAdd = this.props.timer - 1;
   }
 
   countDown() {
     this.timer = setInterval(() => {
-      let currTime = this.state.timeToAdd;
+      let currTime = this.props.timer;
       currTime -= 1;
       this.setState({ timeToAdd: currTime });
       if (this.state.timeToAdd < 0) {
@@ -25,6 +25,12 @@ class ProductDetails extends React.Component {
       }
     }, 1000);
   }
+
+  /*   componentDidUpdate(prevProps) {
+    if (prevProps.timer === 1 && this.props.timer === 0) {
+      this.props.clearTimer(true);
+    }
+  } */
 
   render() {
     if (this.state.modal === true) {

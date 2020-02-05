@@ -11,17 +11,11 @@ class ProductList extends React.Component {
     this.timer = null;
   }
 
-  startTimer() {
-    this.timer = setInterval(() => {
-      let currTime = this.state.timeToAdd;
-      currTime -= 1;
-      this.setState({ timeToAdd: currTime });
-      if (this.state.timeToAdd < 0) {
-        clearInterval(this.timer);
-        this.setState({ timeToAdd: 10 }, this.randomProducts());
-      }
-    }, 1000);
-  }
+  /*   checkTimer() {
+    if (this.props.timer === 0) {
+      this.randomProducts();
+    }
+  } */
 
   randomProducts() {
     const tempProducts = this.state.products;
@@ -34,15 +28,21 @@ class ProductList extends React.Component {
         prod++;
       }
     }
-    this.startTimer();
+    // this.startTimer();
     this.setState({ quickProducts: quickBuyProducts });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.timer <= 0 && this.props.timer === 10) {
+      this.randomProducts();
+    }
   }
 
   render() {
     const prodList = this.state.quickProducts.map((product, index) => {
       return (
         <div key={index} className="col-lg-4  col-md-6 col-sm-6">
-          <ProductListItem product={product} setView={this.props.setView} time={this.state.timeToAdd} addToCart={this.props.addToCart}/>
+          <ProductListItem product={product} setView={this.props.setView} time={this.props.timer} addToCart={this.props.addToCart}/>
         </div>
       );
     });

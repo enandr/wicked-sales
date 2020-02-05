@@ -14,10 +14,13 @@ export default class App extends React.Component {
       cart: [],
       cartItemCount: 0,
       modalOpen: true,
-      masterTimer: { min: 4, sec: 59 }
+      masterTimer: { min: 4, sec: 59 },
+      buyTimer: 10
     };
+    this.buyTimer = null;
     this.timer = null;
     this.masterTimer();
+    this.buyTimerFn();
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteFromCart = this.deleteFromCart.bind(this);
@@ -42,6 +45,25 @@ export default class App extends React.Component {
       }
       this.setState({ masterTimer: currTime });
     }, 1000);
+  }
+
+  buyTimerFn(clear) {
+    if (clear !== true) {
+      this.buyTimer = setInterval(() => {
+        let currTime = this.state.buyTimer;
+        currTime -= 1;
+        this.setState({ buyTimer: currTime });
+        if (this.state.buyTimer < 0) {
+          this.setState({ buyTimer: 10 });
+        }
+      }, 1000);
+    } else {
+      clearInterval(this.buyTimer);
+    }
+  }
+
+  clearBuyTimer() {
+    clearInterval(this.buyTimer);
   }
 
   render() {
@@ -69,7 +91,7 @@ export default class App extends React.Component {
       case 'details':
         return (
           <div>
-            <ProductDetails productId={this.state.params.productId} setView={this.setView} addToCart={this.addToCart}/>
+            <ProductDetails timer={this.state.buyTimer} clearTimer={this.buyTimerFn} productId={this.state.params.productId} setView={this.setView} addToCart={this.addToCart}/>
             <TotalModal setView={this.setView} cart={this.state.cart} text='View Cart' />
           </div>
         );
@@ -88,7 +110,7 @@ export default class App extends React.Component {
       default:
         return (
           <div>
-            <ProductList setView={this.setView} addToCart={this.addToCart}/>
+            <ProductList timer={this.state.buyTimer} setView={this.setView} addToCart={this.addToCart}/>
             <TotalModal setView={this.setView} cart={this.state.cart} text='View Cart'/>
           </div>
 
