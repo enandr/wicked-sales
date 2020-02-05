@@ -65,6 +65,7 @@ class PlaceOrder extends React.Component {
 
   handleChange(event) {
     const name = event.target.name;
+    let value = event.target.value;
     const length = event.target.value.length;
     const newState = {};
     switch (name) {
@@ -75,15 +76,19 @@ class PlaceOrder extends React.Component {
         } else {
           newState[name + 'Class'] = 'form-control is-invalid';
         }
-        newState[name] = event.target.value;
+        if (length <= 1) {
+          value = value.trim();
+        }
+        newState[name] = value;
         break;
       case 'cc':
+        value = value.trim();
         if (length > 16) {
           newState[name + 'Class'] = 'form-control is-valid';
         } else {
           if (!isNaN(event.target.value)) {
             newState[name + 'Class'] = 'form-control is-invalid';
-            newState[name] = event.target.value;
+            newState[name] = value;
           }
         }
         break;
@@ -114,9 +119,9 @@ class PlaceOrder extends React.Component {
   }
 
   placeOrder() {
-    const name = this.state.name;
-    const cc = this.state.cc;
-    const address = this.state.address;
+    const name = this.state.name.trim();
+    const cc = this.state.cc.trim();
+    const address = this.state.address.trim();
     const init = {
       method: 'POST',
       headers: {
