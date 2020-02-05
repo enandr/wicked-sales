@@ -23,7 +23,7 @@ class CartSummaryItem extends React.Component {
       return (
         <div className="card flex-row mt-3">
           <div className="row">
-            <img className="ml-3 miniImage col-md-4 col-sm-12" src={this.props.product.image}></img>
+            <img className="ml-3 mt-2 mb-2 miniImage col-md-4 col-sm-12" src={this.props.product.image}></img>
             <aside className="d-flex flex-column justify-content-center col-md-6 col-sm-12">
               <div>{this.props.product.name}</div>
               {<div>${(this.props.product.price / 100).toFixed(2)} <span className="text-primary">50% OFF</span></div>}
@@ -38,7 +38,7 @@ class CartSummaryItem extends React.Component {
     return (
       <div className="card flex-row mt-3">
         <div className="row">
-          <img className="ml-3 miniImage col-md-6 col-sm-12" src={this.props.product.image}></img>
+          <img className="ml-3 mt-2 mb-2 miniImage col-md-6 col-sm-12" src={this.props.product.image}></img>
           <aside className="d-flex flex-column justify-content-center col-md-6 col-sm-12">
             <div>{this.props.product.name}</div>
             {<div>${(this.props.product.price / 100).toFixed(2)}</div>}
