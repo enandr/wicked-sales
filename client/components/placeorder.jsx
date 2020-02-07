@@ -12,7 +12,7 @@ class PlaceOrder extends React.Component {
       ccClass: 'form-control',
       addressClass: 'form-control',
       modal: false,
-      canOrder: 'btn btn-danger clickable'
+      canOrder: 'btn btn-danger clickable disabled'
     };
     this.handleConfirm = this.handleConfirm.bind(this);
   }
@@ -99,7 +99,7 @@ class PlaceOrder extends React.Component {
     if (this.state.name.length > 3 && this.state.address.length > 3 && this.state.cc.length > 15) {
       newState.canOrder = 'btn btn-success clickable';
     } else {
-      newState.canOrder = 'btn btn-danger clickable';
+      newState.canOrder = 'btn btn-danger clickable disabled';
     }
     this.setState(newState);
   }

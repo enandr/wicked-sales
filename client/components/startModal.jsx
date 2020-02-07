@@ -20,9 +20,9 @@ export default class ModalExample extends React.Component {
     return (
       <div>
         <Modal isOpen={this.state.modal} toggle={toggle} className="className">
-          <ModalHeader toggle={toggle}>Lightining Sales</ModalHeader>
+          <ModalHeader toggle={toggle}>Lightning Sales</ModalHeader>
           <ModalBody>
-            NOTICE: Lighting Sales is a demo E-Commerce app. It does hold any inventory nor does it exchange any money. DO NOT enter in real information as you checkout.
+            NOTICE: Lightning Sales is a demo E-Commerce app. It does hold any inventory nor does it exchange any money. DO NOT enter in real information as you checkout.
             <br></br><br></br>
             HOW IT WORKS: Every 10 Seconds 6 New Products will appear on the page. You have 10 seconds from the time it appears to click buy now. After you add it to your cart, you have 5 minutes to finialize purchase!
           </ModalBody>
